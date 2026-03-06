@@ -1,5 +1,7 @@
 using Application_Component;
 using ApplicationComponent;
+using ApplicationComponent.DTOs;
+using ApplicationRepositoryComponent;
 using Domain_Component.Entities;
 using Domain_Component.Interfaces;
 using DomainComponent.Interfaces;
@@ -30,6 +32,11 @@ builder.Services.AddTransient<ICommonRepository<Note>, NoteRepository>();
 
 builder.Services.AddTransient<IService, ItemService>();
 builder.Services.AddTransient<ICommonService<Note>, NoteService>();
+
+
+// DTO
+builder.Services.AddTransient<ICommonRepository<NoteDTO>, NoteDTORepository>();
+builder.Services.AddTransient<ICommonService<NoteDTO>, NoteDTOService>();
 
 // Build the service provider
 var app = builder.Build();
@@ -74,6 +81,23 @@ app.MapPost("/notes", async (int itemId, string message, ICommonService<Note> no
     await noteService.AddAsync(note);
     return Results.Ok("Note added successfully!");
 }).WithName("Post Notes");
+
+
+// DTO
+app.MapGet("/notesDto", async (ICommonService<NoteDTO> service) =>
+{
+    return await service.GetAsync();
+
+}).WithName("Get Note DTO");
+
+
+app.MapPost("/notesDto", async (NoteDTO dto, ICommonService<NoteDTO> service ) =>
+{
+    await service.AddAsync(dto);
+    return Results.Created();
+
+}).WithName("Post Note DTO");
+
 
 app.Run();
  
