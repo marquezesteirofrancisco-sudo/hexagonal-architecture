@@ -27,7 +27,7 @@ namespace ApplicationComponent
             var note = _mapperEntity.Map(dto);
             var noteModel = _mapperModel.Map(dto);
 
-            if (note.Message.Length > 3)
+            if (note.Message.Length < 3)
                 throw new Exception("El mensaje de tener mas de 3 letras.");
                 
             await _repository.AddAsync(noteModel);

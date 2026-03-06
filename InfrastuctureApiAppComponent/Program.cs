@@ -1,10 +1,12 @@
 using Application_Component;
+using Application_RepositoryComponent.Models;
 using ApplicationComponent;
 using ApplicationComponent.DTOs;
 using ApplicationRepositoryComponent;
 using Domain_Component.Entities;
 using Domain_Component.Interfaces;
 using DomainComponent.Interfaces;
+using MapperComponent;
 using Microsoft.EntityFrameworkCore;
 using RepositoryComponent;
 
@@ -37,6 +39,13 @@ builder.Services.AddTransient<ICommonService<Note>, NoteService>();
 // DTO
 builder.Services.AddTransient<ICommonRepository<NoteDTO>, NoteDTORepository>();
 builder.Services.AddTransient<ICommonService<NoteDTO>, NoteDTOService>();
+
+// Mappers
+builder.Services.AddTransient <IAddRepository<NoteModel>, NoteMapperRepository>();
+builder.Services.AddTransient <IMapper<NoteDTO, Note>, NoteEntityMapper>();
+builder.Services.AddTransient <IMapper<NoteDTO, NoteModel>, NoteModelMapper>();
+builder.Services.AddTransient <IAddService<NoteDTO, NoteModel>, NoteMapperService<NoteDTO, NoteModel>>();
+
 
 // Build the service provider
 var app = builder.Build();
@@ -97,6 +106,17 @@ app.MapPost("/notesDto", async (NoteDTO dto, ICommonService<NoteDTO> service ) =
     return Results.Created();
 
 }).WithName("Post Note DTO");
+
+
+// end point de los mappers
+
+app.MapPost("/notemapper", async (NoteDTO note, IAddService<NoteDTO, NoteModel> service) =>
+{
+    await service.AddAsync(note);
+    return Results.Created();
+
+}).WithName("Get Note Mapper");
+
 
 
 app.Run();
