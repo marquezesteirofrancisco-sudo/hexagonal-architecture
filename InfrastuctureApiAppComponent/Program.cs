@@ -6,6 +6,8 @@ using ApplicationRepositoryComponent;
 using Domain_Component.Entities;
 using Domain_Component.Interfaces;
 using DomainComponent.Interfaces;
+using InfrastructureRepositoryComponent.ExtraData;
+using InfrastructureRepositoryComponent.Factories;
 using MapperComponent;
 using Microsoft.EntityFrameworkCore;
 using RepositoryComponent;
@@ -45,6 +47,11 @@ builder.Services.AddTransient <IAddRepository<NoteModel>, NoteMapperRepository>(
 builder.Services.AddTransient <IMapper<NoteDTO, Note>, NoteEntityMapper>();
 builder.Services.AddTransient <IMapper<NoteDTO, NoteModel>, NoteModelMapper>();
 builder.Services.AddTransient <IAddService<NoteDTO, NoteModel>, NoteMapperService<NoteDTO, NoteModel>>();
+
+// Fabrica
+builder.Services.AddTransient<IRepositoryFactory<IAddRepository<Note>, NoteExtraData>, NoteRepositoryFactory>();
+builder.Services.AddTransient<IMapper<NoteDTO, NoteExtraData> , NoteExtraDataMapper>();
+builder.Services.AddTransient<IAddService<NoteDTO, NoteExtraData>, NoteWithFactoryService<NoteDTO, NoteExtraData>>();
 
 
 // Build the service provider
@@ -117,6 +124,14 @@ app.MapPost("/notemapper", async (NoteDTO note, IAddService<NoteDTO, NoteModel> 
 
 }).WithName("Get Note Mapper");
 
+
+
+app.MapPost("/notefactory", async (NoteDTO note, IAddService<NoteDTO, NoteExtraData> service) =>
+{
+    await service.AddAsync(note);
+    return Results.Created();
+
+}).WithName("Post Note Factory");
 
 
 app.Run();
