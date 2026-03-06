@@ -5,7 +5,7 @@ VisualStudioVersion = 17.14.36915.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationComponent", "ApplicationComponent\ApplicationComponent.csproj", "{2B231A20-C638-D008-A6A2-5EA20C80A517}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationRepositoryComponent", "ApplicationRepositoryComponent\ApplicationRepositoryComponent.csproj", "{33D8A34B-7062-39C1-8D0F-17268F83EF0F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfrastructureRepositoryComponent", "ApplicationRepositoryComponent\InfrastructureRepositoryComponent.csproj", "{33D8A34B-7062-39C1-8D0F-17268F83EF0F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainComponent", "DomainComponent\DomainComponent.csproj", "{A909A643-B423-2862-A0D3-D246882408BA}"
 EndProject

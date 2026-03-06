@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ApplicationComponent\ApplicationComponent.csproj" />
-    <ProjectReference Include="..\ApplicationRepositoryComponent\ApplicationRepositoryComponent.csproj" />
+    <ProjectReference Include="..\ApplicationRepositoryComponent\InfrastructureRepositoryComponent.csproj" />
     <ProjectReference Include="..\MapperComponent\MapperComponent.csproj" />
   </ItemGroup>
 
