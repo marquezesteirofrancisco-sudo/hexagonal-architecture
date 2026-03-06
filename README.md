@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="architectureHexagonal.png" alt="Esquema de Clean Architecture" width="550">
+  <img src="ArchitectureHexagonal.png" alt="Esquema de Clean Architecture" width="550">
 </p>
 
 "# hexagonal-architecture" 
