@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="./architectureHexagonal.png" alt="Esquema de Clean Architecture" width="550">
+</p>
+
 "# hexagonal-architecture" 
 
 Product Management System - Hexagonal Architecture (.NET 9)
