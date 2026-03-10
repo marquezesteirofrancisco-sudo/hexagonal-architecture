@@ -5,6 +5,7 @@ using ApplicationComponent.DTOs;
 using ApplicationRepositoryComponent;
 using Domain_Component.Entities;
 using Domain_Component.Interfaces;
+using DomainComponent.Entities;
 using DomainComponent.Interfaces;
 using InfrastructureRepositoryComponent.ExtraData;
 using InfrastructureRepositoryComponent.Factories;
@@ -52,6 +53,14 @@ builder.Services.AddTransient <IAddService<NoteDTO, NoteModel>, NoteMapperServic
 builder.Services.AddTransient<IRepositoryFactory<IAddRepository<Note>, NoteExtraData>, NoteRepositoryFactory>();
 builder.Services.AddTransient<IMapper<NoteDTO, NoteExtraData> , NoteExtraDataMapper>();
 builder.Services.AddTransient<IAddService<NoteDTO, NoteExtraData>, NoteWithFactoryService<NoteDTO, NoteExtraData>>();
+
+// Completar
+builder.Services.AddTransient<ICompleteService, CompleteItemService>();
+builder.Services.AddTransient<ICompleteRepository, ItemRepository>();
+builder.Services.AddTransient<IGetRepository<Item>, ItemRepository>();
+
+
+
 
 
 // Build the service provider
@@ -132,6 +141,28 @@ app.MapPost("/notefactory", async (NoteDTO note, IAddService<NoteDTO, NoteExtraD
     return Results.Created();
 
 }).WithName("Post Note Factory");
+
+
+
+app.MapPut("completeItem/{id}", async (int id, ICompleteService service) =>
+{
+    try
+    {
+        await service.Complete(id);
+
+        return Results.NoContent();
+    }
+    catch (InvalidOperationException ex)
+    {
+        return Results.NotFound(ex.Message);
+    }
+    catch (Exception ex)
+    {
+        return Results.InternalServerError(ex.Message);
+    }
+
+}).WithName("Complete Item");
+
 
 
 app.Run();
